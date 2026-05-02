@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Onco Global — Cancer Care Center</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #0a1628;
+            --navy-mid: #112240;
+            --teal: #0d9488;
+            --teal-light: #14b8a6;
+            --gold: #c9a84c;
+            --gold-light: #e8c97a;
+            --cream: #f8f4ef;
+            --white: #ffffff;
+            --gray: #8899aa;
+            --text: #1e2d40;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--navy);
+            color: var(--white);
+            overflow-x: hidden;
+        }
+
+        /* ── ANIMATED BACKGROUND ── */
+        .bg-orbs {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.15;
+            animation: drift 20s ease-in-out infinite alternate;
+        }
+        .orb-1 { width: 600px; height: 600px; background: var(--teal); top: -200px; right: -100px; animation-delay: 0s; }
+        .orb-2 { width: 400px; height: 400px; background: var(--gold); bottom: 10%; left: -100px; animation-delay: -7s; }
+        .orb-3 { width: 300px; height: 300px; background: #4a9eff; top: 40%; right: 20%; animation-delay: -14s; }
+
+        @keyframes drift {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(40px, 30px) scale(1.1); }
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            padding: 20px 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(10, 22, 40, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-logo-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--teal), var(--gold));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .nav-logo-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-logo-text span {
+            color: var(--teal-light);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 36px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover { color: var(--teal-light); }
+
+        .nav-cta {
+            background: linear-gradient(135deg, var(--teal), #0a7a70);
+            color: white !important;
+            padding: 10px 24px;
+            border-radius: 6px;
+            font-weight: 500 !important;
+            transition: transform 0.2s, box-shadow 0.2s !important;
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 24px rgba(13,148,136,0.4);
+            color: white !important;
+        }
+
+        /* ── HERO ── */
+        .hero {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 120px 60px 80px;
+        }
+
+        .hero-content {
+            max-width: 680px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(13,148,136,0.15);
+            border: 1px solid rgba(13,148,136,0.3);
+            padding: 8px 18px;
+            border-radius: 100px;
+            font-size: 0.78rem;
+            font-weight: 500;
+            color: var(--teal-light);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 32px;
+            animation: fadeUp 0.8s ease both;
+        }
+
+        .hero-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--teal-light);
+            border-radius: 50%;
+            animation: pulse 2s ease infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+
+        .hero h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(3rem, 6vw, 5.5rem);
+            font-weight: 300;
+            line-height: 1.05;
+            letter-spacing: -1px;
+            margin-bottom: 8px;
+            animation: fadeUp 0.8s 0.1s ease both;
+        }
+
+        .hero h1 em {
+            font-style: italic;
+            color: var(--gold-light);
+        }
+
+        .hero h1 .line-teal {
+            color: var(--teal-light);
+        }
+
+        .hero-sub {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.55);
+            line-height: 1.7;
+            max-width: 500px;
+            margin: 24px 0 44px;
+            font-weight: 300;
+            animation: fadeUp 0.8s 0.2s ease both;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            animation: fadeUp 0.8s 0.3s ease both;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--teal), #0a7a70);
+            color: white;
+            padding: 16px 36px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-decoration: none;
+            letter-spacing: 0.3px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(13,148,136,0.4);
+        }
+
+        .btn-secondary {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.2s;
+            padding: 16px 20px;
+        }
+
+        .btn-secondary:hover { color: white; }
+
+        .hero-stats {
+            display: flex;
+            gap: 48px;
+            margin-top: 72px;
+            padding-top: 48px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            animation: fadeUp 0.8s 0.4s ease both;
+        }
+
+        .stat-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.8rem;
+            font-weight: 600;
+            color: var(--gold-light);
+            line-height: 1;
+        }
+        .stat-label {
+            font-size: 0.78rem;
+            color: rgba(255,255,255,0.45);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 4px;
+        }
+
+        .hero-image-side {
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 45%;
+            overflow: hidden;
+        }
+
+        .hero-visual {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(13,148,136,0.1), rgba(201,168,76,0.05));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dna-graphic {
+            position: relative;
+            width: 300px;
+            height: 500px;
+            animation: floatUp 6s ease-in-out infinite;
+        }
+
+        @keyframes floatUp {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .dna-line {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent, var(--teal), transparent);
+            opacity: 0.3;
+        }
+
+        .dna-node {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--teal-light);
+            box-shadow: 0 0 20px var(--teal);
+            animation: nodePulse 3s ease-in-out infinite;
+        }
+
+        @keyframes nodePulse {
+            0%, 100% { box-shadow: 0 0 20px var(--teal); }
+            50% { box-shadow: 0 0 40px var(--teal), 0 0 60px rgba(13,148,136,0.3); }
+        }
+
+        .dna-arm {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(to right, var(--teal-light), var(--gold));
+            border-radius: 2px;
+            opacity: 0.5;
+        }
+
+        .circle-ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid rgba(13,148,136,0.2);
+            animation: ringExpand 4s ease-in-out infinite;
+        }
+
+        @keyframes ringExpand {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
+            50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.6; }
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── SERVICES STRIP ── */
+        .services-strip {
+            position: relative;
+            z-index: 1;
+            background: rgba(255,255,255,0.03);
+            border-top: 1px solid rgba(255,255,255,0.06);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            padding: 48px 60px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 32px;
+        }
+
+        .service-card {
+            padding: 28px 24px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            transition: transform 0.3s, border-color 0.3s, background 0.3s;
+            cursor: default;
+        }
+
+        .service-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(13,148,136,0.3);
+            background: rgba(13,148,136,0.05);
+        }
+
+        .service-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, rgba(13,148,136,0.2), rgba(201,168,76,0.1));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            margin-bottom: 16px;
+        }
+
+        .service-card h3 {
+            font-size: 0.95rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .service-card p {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.4);
+            line-height: 1.6;
+        }
+
+        /* ── ABOUT SECTION ── */
+        .about {
+            position: relative;
+            z-index: 1;
+            padding: 100px 60px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .about-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--teal-light);
+            margin-bottom: 20px;
+        }
+
+        .about h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            font-weight: 300;
+            line-height: 1.2;
+            margin-bottom: 24px;
+        }
+
+        .about h2 em {
+            font-style: italic;
+            color: var(--gold-light);
+        }
+
+        .about p {
+            color: rgba(255,255,255,0.5);
+            line-height: 1.8;
+            font-size: 0.95rem;
+            margin-bottom: 16px;
+        }
+
+        .about-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .about-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 24px;
+            transition: border-color 0.3s;
+        }
+
+        .about-card:hover { border-color: rgba(201,168,76,0.3); }
+
+        .about-card-icon {
+            font-size: 28px;
+            margin-bottom: 12px;
+        }
+
+        .about-card h4 {
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 6px;
+        }
+
+        .about-card p {
+            font-size: 0.78rem;
+            margin-bottom: 0;
+        }
+
+        /* ── DOCTORS ── */
+        .doctors {
+            position: relative;
+            z-index: 1;
+            padding: 80px 60px;
+            background: rgba(255,255,255,0.02);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--teal-light);
+            margin-bottom: 16px;
+        }
+
+        .section-header h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 300;
+            line-height: 1.2;
+        }
+
+        .section-header h2 em {
+            font-style: italic;
+            color: var(--gold-light);
+        }
+
+        .doctors-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+        }
+
+        .doctor-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 16px;
+            padding: 32px 28px;
+            text-align: center;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .doctor-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(13,148,136,0.3);
+        }
+
+        .doctor-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--teal), var(--gold));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin: 0 auto 20px;
+        }
+
+        .doctor-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .doctor-spec {
+            font-size: 0.78rem;
+            color: var(--teal-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+        }
+
+        .doctor-bio {
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.4);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .doctor-exp {
+            display: inline-block;
+            background: rgba(201,168,76,0.1);
+            border: 1px solid rgba(201,168,76,0.2);
+            color: var(--gold-light);
+            font-size: 0.75rem;
+            padding: 6px 14px;
+            border-radius: 100px;
+        }
+
+        /* ── APPOINTMENT CTA ── */
+        .appointment-cta {
+            position: relative;
+            z-index: 1;
+            padding: 100px 60px;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(13,148,136,0.08), rgba(201,168,76,0.05));
+            border-top: 1px solid rgba(13,148,136,0.15);
+            border-bottom: 1px solid rgba(13,148,136,0.15);
+        }
+
+        .appointment-cta h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 300;
+            margin-bottom: 16px;
+        }
+
+        .appointment-cta h2 em {
+            font-style: italic;
+            color: var(--teal-light);
+        }
+
+        .appointment-cta p {
+            color: rgba(255,255,255,0.5);
+            font-size: 1rem;
+            max-width: 500px;
+            margin: 0 auto 40px;
+            line-height: 1.7;
+        }
+
+        .cta-features {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 48px;
+        }
+
+        .cta-feature {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.6);
+        }
+
+        .cta-feature-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--teal-light);
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            position: relative;
+            z-index: 1;
+            padding: 60px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 48px;
+        }
+
+        .footer-brand p {
+            color: rgba(255,255,255,0.4);
+            font-size: 0.85rem;
+            line-height: 1.7;
+            margin-top: 16px;
+            max-width: 280px;
+        }
+
+        .footer-col h4 {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 20px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-col ul li a {
+            color: rgba(255,255,255,0.35);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.2s;
+        }
+
+        .footer-col ul li a:hover { color: var(--teal-light); }
+
+        .footer-bottom {
+            position: relative;
+            z-index: 1;
+            padding: 24px 60px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-bottom p {
+            color: rgba(255,255,255,0.25);
+            font-size: 0.78rem;
+        }
+
+        .footer-bottom p span {
+            color: var(--teal-light);
+        }
+
+        /* ── CHAT BUTTON OVERRIDE ── */
+        #embedded-messaging {
+            z-index: 9999 !important;
+        }
+
+        /* ── SCROLL ANIMATIONS ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── LOCATIONS STRIP ── */
+        .locations {
+            position: relative;
+            z-index: 1;
+            padding: 60px;
+            overflow: hidden;
+        }
+
+        .locations-scroll {
+            display: flex;
+            gap: 20px;
+            animation: scrollLeft 20s linear infinite;
+            width: max-content;
+        }
+
+        @keyframes scrollLeft {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .location-pill {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            padding: 14px 24px;
+            border-radius: 100px;
+            white-space: nowrap;
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.6);
+        }
+
+        .location-pill-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--teal-light);
+        }
+
+        /* ── MOBILE ── */
+        @media (max-width: 768px) {
+            nav { padding: 16px 20px; }
+            .nav-links { display: none; }
+            .hero { padding: 100px 20px 60px; }
+            .hero-image-side { display: none; }
+            .hero-stats { gap: 24px; }
+            .services-strip { padding: 40px 20px; }
+            .services-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+            .about { padding: 60px 20px; grid-template-columns: 1fr; gap: 40px; }
+            .doctors { padding: 60px 20px; }
+            .doctors-grid { grid-template-columns: 1fr; }
+            .appointment-cta { padding: 60px 20px; }
+            .cta-features { flex-direction: column; gap: 16px; align-items: center; }
+            footer { padding: 40px 20px; grid-template-columns: 1fr; gap: 32px; }
+            .footer-bottom { padding: 20px; flex-direction: column; gap: 8px; text-align: center; }
+            .locations { padding: 40px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="bg-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+</div>
+
+<!-- NAV -->
+<nav>
+    <div class="nav-logo">
+        <div class="nav-logo-icon">⚕</div>
+        <div class="nav-logo-text">Onco <span>Global</span></div>
+    </div>
+    <ul class="nav-links">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#doctors">Specialists</a></li>
+        <li><a href="#locations">Locations</a></li>
+        <li><a href="#appointment" class="nav-cta">Book Appointment</a></li>
+    </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-content">
+        <div class="hero-badge">World-Class Cancer Care</div>
+        <h1>
+            Advanced <em>Oncology</em><br>
+            <span class="line-teal">Care & Treatment</span>
+        </h1>
+        <p class="hero-sub">
+            Compassionate, cutting-edge cancer care delivered by India's leading oncology specialists. Your journey to recovery starts here.
+        </p>
+        <div class="hero-actions">
+            <button class="btn-primary" onclick="openChat()">
+                💬 Book Appointment
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+            <a href="#about" class="btn-secondary">
+                Learn More
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+        </div>
+        <div class="hero-stats">
+            <div class="stat-item">
+                <div class="stat-number">15K+</div>
+                <div class="stat-label">Patients Treated</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">50+</div>
+                <div class="stat-label">Specialists</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">4</div>
+                <div class="stat-label">Centers</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">20yr</div>
+                <div class="stat-label">Excellence</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Visual -->
+    <div class="hero-image-side">
+        <div class="hero-visual">
+            <div style="position:relative; width:400px; height:400px;">
+                <!-- Rings -->
+                <div class="circle-ring" style="width:300px;height:300px;top:50%;left:50%;"></div>
+                <div class="circle-ring" style="width:240px;height:240px;top:50%;left:50%;animation-delay:-1s;border-color:rgba(201,168,76,0.15);"></div>
+                <div class="circle-ring" style="width:180px;height:180px;top:50%;left:50%;animation-delay:-2s;"></div>
+                <!-- Center -->
+                <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg,rgba(13,148,136,0.3),rgba(201,168,76,0.2));display:flex;align-items:center;justify-content:center;font-size:40px;box-shadow:0 0 60px rgba(13,148,136,0.3);">⚕</div>
+                <!-- Orbiting dots -->
+                <div style="position:absolute;top:50%;left:50%;width:260px;height:260px;margin:-130px 0 0 -130px;animation:orbit 8s linear infinite;">
+                    <div style="position:absolute;top:-6px;left:50%;width:12px;height:12px;background:var(--teal-light);border-radius:50%;box-shadow:0 0 16px var(--teal);margin-left:-6px;"></div>
+                </div>
+                <div style="position:absolute;top:50%;left:50%;width:200px;height:200px;margin:-100px 0 0 -100px;animation:orbit 12s linear infinite reverse;">
+                    <div style="position:absolute;top:-5px;left:50%;width:10px;height:10px;background:var(--gold-light);border-radius:50%;box-shadow:0 0 12px var(--gold);margin-left:-5px;"></div>
+                </div>
+                <style>@keyframes orbit { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }</style>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services-strip" id="services">
+    <div class="services-grid">
+        <div class="service-card reveal">
+            <div class="service-icon">🔬</div>
+            <h3>Medical Oncology</h3>
+            <p>Chemotherapy, immunotherapy, and targeted drug therapies for all cancer types.</p>
+        </div>
+        <div class="service-card reveal" style="transition-delay:0.1s">
+            <div class="service-icon">⚡</div>
+            <h3>Radiation Therapy</h3>
+            <p>State-of-the-art IMRT, VMAT, and stereotactic radiosurgery treatments.</p>
+        </div>
+        <div class="service-card reveal" style="transition-delay:0.2s">
+            <div class="service-icon">🏥</div>
+            <h3>Surgical Oncology</h3>
+            <p>Minimally invasive and robotic-assisted cancer surgeries by expert surgeons.</p>
+        </div>
+        <div class="service-card reveal" style="transition-delay:0.3s">
+            <div class="service-icon">🧬</div>
+            <h3>Genetic Counselling</h3>
+            <p>Comprehensive genetic testing and hereditary cancer risk assessment.</p>
+        </div>
+    </div>
+</section>
+
+<!-- LOCATIONS TICKER -->
+<section class="locations" id="locations">
+    <div class="locations-scroll">
+        <div class="location-pill"><div class="location-pill-dot"></div>Headquarters Mumbai</div>
+        <div class="location-pill"><div class="location-pill-dot"></div>Bengaluru Branch</div>
+        <div class="location-pill"><div class="location-pill-dot"></div>Chennai Branch</div>
+        <div class="location-pill"><div class="location-pill-dot"></div>Kochi Branch</div>
+        <div class="location-pill"><div class="location-pill-dot"></div>Mon – Fri: 10:00 AM – 6:00 PM</div>
+        <div class="location-pill"><div class="location-pill-dot"></div>Emergency: 24/7</div>
+        <!-- Duplicate for seamless loop -->
+        <div class="location-pill"><div class="location-pill-dot"></div>Headquarters Mumbai</div>
+        <div class="location-pill"><div class="location-pill-dot"></div>Bengaluru Branch</div>
+        <div class="location-pill"><div class="location-pill-dot"></div>Chennai Branch</div>
+        <div class="location-pill"><div class="location-pill-dot"></div>Kochi Branch</div>
+        <div class="location-pill"><div class="location-pill-dot"></div>Mon – Fri: 10:00 AM – 6:00 PM</div>
+        <div class="location-pill"><div class="location-pill-dot"></div>Emergency: 24/7</div>
+    </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+    <div class="reveal">
+        <div class="about-label">About Onco Global</div>
+        <h2>India's Premier <em>Cancer Care</em> Network</h2>
+        <p>Founded in 2005, Onco Global Cancer Care Center has been at the forefront of oncology treatment in India. Our multidisciplinary approach combines the latest medical advances with compassionate, patient-centred care.</p>
+        <p>With four state-of-the-art facilities across major cities, we bring world-class cancer treatment closer to patients and their families.</p>
+    </div>
+    <div class="about-cards reveal" style="transition-delay:0.2s">
+        <div class="about-card">
+            <div class="about-card-icon">🏆</div>
+            <h4>NABH Accredited</h4>
+            <p>Certified by National Accreditation Board for Hospitals</p>
+        </div>
+        <div class="about-card">
+            <div class="about-card-icon">🌐</div>
+            <h4>Global Partnerships</h4>
+            <p>Affiliated with leading cancer institutes worldwide</p>
+        </div>
+        <div class="about-card">
+            <div class="about-card-icon">🤖</div>
+            <h4>AI-Powered Diagnostics</h4>
+            <p>Advanced AI tools for early detection and diagnosis</p>
+        </div>
+        <div class="about-card">
+            <div class="about-card-icon">💙</div>
+            <h4>Patient Support</h4>
+            <p>Dedicated counsellors and support groups available</p>
+        </div>
+    </div>
+</section>
+
+<!-- DOCTORS -->
+<section class="doctors" id="doctors">
+    <div class="section-header reveal">
+        <div class="section-label">Our Specialists</div>
+        <h2>Meet Our <em>Expert</em> Oncologists</h2>
+    </div>
+    <div class="doctors-grid">
+        <div class="doctor-card reveal">
+            <div class="doctor-avatar">👨‍⚕️</div>
+            <div class="doctor-name">Dr. Ravi Gupta</div>
+            <div class="doctor-spec">Medical Oncology</div>
+            <div class="doctor-bio">Specialist in haematological malignancies and targeted therapies with over 18 years of clinical experience.</div>
+            <span class="doctor-exp">18 Years Experience</span>
+        </div>
+        <div class="doctor-card reveal" style="transition-delay:0.15s">
+            <div class="doctor-avatar">👩‍⚕️</div>
+            <div class="doctor-name">Dr. Neha Kapoor</div>
+            <div class="doctor-spec">Surgical Oncology</div>
+            <div class="doctor-bio">Pioneer in robotic-assisted cancer surgery with expertise in hepatobiliary and colorectal oncology.</div>
+            <span class="doctor-exp">22 Years Experience</span>
+        </div>
+        <div class="doctor-card reveal" style="transition-delay:0.3s">
+            <div class="doctor-avatar">👨‍⚕️</div>
+            <div class="doctor-name">Dr. Imran Khan</div>
+            <div class="doctor-spec">Radiation Oncology</div>
+            <div class="doctor-bio">Expert in stereotactic radiosurgery and IMRT techniques for brain and spine tumours.</div>
+            <span class="doctor-exp">15 Years Experience</span>
+        </div>
+    </div>
+</section>
+
+<!-- APPOINTMENT CTA -->
+<section class="appointment-cta" id="appointment">
+    <h2 class="reveal">Book Your <em>Consultation</em> Today</h2>
+    <p class="reveal">Our AI assistant is available 24/7 to help you schedule an appointment with the right specialist at the right time.</p>
+    <div class="cta-features reveal">
+        <div class="cta-feature"><div class="cta-feature-dot"></div>Instant Confirmation</div>
+        <div class="cta-feature"><div class="cta-feature-dot"></div>Choose Your Doctor</div>
+        <div class="cta-feature"><div class="cta-feature-dot"></div>Select Your Branch</div>
+        <div class="cta-feature"><div class="cta-feature-dot"></div>Available 24/7</div>
+    </div>
+    <button class="btn-primary reveal" style="font-size:1rem;padding:18px 48px;" onclick="openChat()">
+        💬 Start Chat to Book Appointment
+    </button>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-brand reveal">
+        <div class="nav-logo">
+            <div class="nav-logo-icon">⚕</div>
+            <div class="nav-logo-text">Onco <span>Global</span></div>
+        </div>
+        <p>Committed to delivering world-class cancer care with compassion, innovation, and excellence across India.</p>
+    </div>
+    <div class="footer-col reveal">
+        <h4>Services</h4>
+        <ul>
+            <li><a href="#">Medical Oncology</a></li>
+            <li><a href="#">Surgical Oncology</a></li>
+            <li><a href="#">Radiation Therapy</a></li>
+            <li><a href="#">Genetic Counselling</a></li>
+        </ul>
+    </div>
+    <div class="footer-col reveal">
+        <h4>Locations</h4>
+        <ul>
+            <li><a href="#">Mumbai HQ</a></li>
+            <li><a href="#">Bengaluru</a></li>
+            <li><a href="#">Chennai</a></li>
+            <li><a href="#">Kochi</a></li>
+        </ul>
+    </div>
+    <div class="footer-col reveal">
+        <h4>Contact</h4>
+        <ul>
+            <li><a href="#">1800-ONCO-HELP</a></li>
+            <li><a href="#">info@oncoglobal.com</a></li>
+            <li><a href="#">Emergency: 24/7</a></li>
+            <li><a href="#">Book Online</a></li>
+        </ul>
+    </div>
+</footer>
+
+<div class="footer-bottom">
+    <p>© 2026 Onco Global Cancer Care Center. All rights reserved.</p>
+    <p>Powered by <span>Agentforce</span> from Salesforce</p>
+</div>
+
+<!-- ============================================ -->
+<!-- SALESFORCE EMBEDDED CHAT                    -->
+<!-- ============================================ -->
+
+<style>
+    /* ── Hide default Salesforce chat button ── */
+    #embedded-messaging {
+        visibility: hidden;
+        pointer-events: none;
+    }
+    /* Show it only after user clicks Book Appointment */
+    #embedded-messaging.chat-ready {
+        visibility: visible;
+        pointer-events: all;
+    }
+</style>
+
+<script type='text/javascript'>
+    var chatInitialized = false;
+    var chatOpen = false;
+
+    function initEmbeddedMessaging() {
+        try {
+            embeddedservice_bootstrap.settings.language = 'en_US';
+            embeddedservice_bootstrap.init(
+                '00Dak00000ofi6l',
+                'Onco_Global',
+                'https://orgfarm-b46be28d58.my.site.com/ESWOncoGlobal1777658123973',
+                {
+                    scrt2URL: 'https://orgfarm-b46be28d58.my.salesforce-scrt.com'
+                }
+            );
+
+            // Once chat is ready, mark as initialized
+            window.addEventListener('onEmbeddedMessagingReady', function() {
+                chatInitialized = true;
+            });
+
+        } catch (err) {
+            console.error('Error loading Embedded Messaging: ', err);
+        }
+    };
+
+    // Called when any "Book Appointment" button is clicked
+    function openChat() {
+        // Make the chat widget visible
+        var chatEl = document.getElementById('embedded-messaging');
+        if (chatEl) {
+            chatEl.classList.add('chat-ready');
+        }
+
+        // Wait for chat to be ready then click the button
+        var attempts = 0;
+        var tryOpen = setInterval(function() {
+            attempts++;
+            var fabBtn = document.querySelector('#embedded-messaging-fab-button')
+                      || document.querySelector('.embeddedServiceHelpButton button')
+                      || document.querySelector('[part="fab-button"]')
+                      || document.querySelector('button[class*="fab"]');
+
+            if (fabBtn) {
+                clearInterval(tryOpen);
+                fabBtn.click();
+            }
+
+            // Stop trying after 5 seconds
+            if (attempts > 50) {
+                clearInterval(tryOpen);
+                console.log('Chat button not found after 5s');
+            }
+        }, 100);
+    }
+</script>
+
+<script type='text/javascript'
+    src='https://orgfarm-b46be28d58.my.site.com/ESWOncoGlobal1777658123973/assets/js/bootstrap.min.js'
+    onload='initEmbeddedMessaging()'>
+</script>
+<!-- ============================================ -->
+
+<script>
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                e.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
