@@ -254,6 +254,7 @@
             animation: fadeUp 0.8s 0.4s ease both;
         }
 
+        .stat-item {}
         .stat-number {
             font-family: 'Cormorant Garamond', serif;
             font-size: 2.8rem;
@@ -1026,21 +1027,16 @@
 <!-- ============================================ -->
 
 <style>
-    /* ── Hide default Salesforce chat button ── */
+    /* FAB button always visible on page */
     #embedded-messaging {
-        visibility: hidden;
-        pointer-events: none;
-    }
-    /* Show it only after user clicks Book Appointment */
-    #embedded-messaging.chat-ready {
-        visibility: visible;
-        pointer-events: all;
+        visibility: visible !important;
+        pointer-events: all !important;
     }
 </style>
 
 <script type='text/javascript'>
-    var chatInitialized = false;
-    var chatOpen = false;
+    var chatReady = false;
+    var userRequestedChat = false;
 
     function initEmbeddedMessaging() {
         try {
@@ -1054,9 +1050,21 @@
                 }
             );
 
-            // Once chat is ready, mark as initialized
+            // Intercept chat before it opens using conversationStarted event
+            // This fires BEFORE the window renders — no flicker
             window.addEventListener('onEmbeddedMessagingReady', function() {
-                chatInitialized = true;
+                chatReady = true;
+                console.log('Chat is ready');
+
+                // Listen for when Salesforce tries to auto-open
+                // If user didn't request it, close immediately with no delay
+                window.addEventListener('onEmbeddedMessagingWindowMaximized', function() {
+                    if (!userRequestedChat) {
+                        try {
+                            embeddedservice_bootstrap.utilAPI.minimizeChat();
+                        } catch(e) {}
+                    }
+                });
             });
 
         } catch (err) {
@@ -1064,34 +1072,33 @@
         }
     };
 
-    // Called when any "Book Appointment" button is clicked
+    // Called when Book Appointment button is clicked
+    // Opens chat WINDOW directly using official Salesforce API
     function openChat() {
-        // Make the chat widget visible
-        var chatEl = document.getElementById('embedded-messaging');
-        if (chatEl) {
-            chatEl.classList.add('chat-ready');
+        userRequestedChat = true;
+        if (chatReady) {
+            // Official Salesforce API — opens chat window directly
+            embeddedservice_bootstrap.utilAPI.launchChat();
+        } else {
+            // Not ready yet — wait and retry
+            var attempts = 0;
+            var tryOpen = setInterval(function() {
+                attempts++;
+                if (chatReady) {
+                    clearInterval(tryOpen);
+                    embeddedservice_bootstrap.utilAPI.launchChat();
+                    return;
+                }
+                // Fallback after 4 seconds — click FAB button directly
+                if (attempts > 20) {
+                    clearInterval(tryOpen);
+                    var fabBtn = document.querySelector('#embedded-messaging-fab-button')
+                              || document.querySelector('[part="fab-button"]')
+                              || document.querySelector('button[embeddedservice-chatbutton_chatbutton]');
+                    if (fabBtn) fabBtn.click();
+                }
+            }, 200);
         }
-
-        // Wait for chat to be ready then click the button
-        var attempts = 0;
-        var tryOpen = setInterval(function() {
-            attempts++;
-            var fabBtn = document.querySelector('#embedded-messaging-fab-button')
-                      || document.querySelector('.embeddedServiceHelpButton button')
-                      || document.querySelector('[part="fab-button"]')
-                      || document.querySelector('button[class*="fab"]');
-
-            if (fabBtn) {
-                clearInterval(tryOpen);
-                fabBtn.click();
-            }
-
-            // Stop trying after 5 seconds
-            if (attempts > 50) {
-                clearInterval(tryOpen);
-                console.log('Chat button not found after 5s');
-            }
-        }, 100);
     }
 </script>
 
